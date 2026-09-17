@@ -1,0 +1,268 @@
+@import "tailwindcss";
+
+@theme {
+  /* SEN palette — Western Kenya: forest, earth, bone, clay, gold */
+  --color-bone: #f4eee1;
+  --color-parchment: #eae1cc;
+  --color-sand: #dfd2b4;
+  --color-ink: #22201a;
+  --color-ink-soft: #57523f;
+  --color-pine: #1b3227;
+  --color-pine-deep: #132019;
+  --color-forest: #2e4a38;
+  --color-moss: #75826b;
+  --color-clay: #bc5a2c;
+  --color-clay-deep: #96431d;
+  --color-gold: #d9a441;
+
+  --font-display: "Instrument Serif", "Georgia", serif;
+  --font-sans: "Manrope", "Avenir Next", "Segoe UI", sans-serif;
+
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-bone);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--color-clay);
+  color: var(--color-bone);
+}
+
+/* ---------- scroll reveal ---------- */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition:
+    opacity 0.9s var(--ease-out-soft),
+    transform 0.9s var(--ease-out-soft);
+  will-change: opacity, transform;
+}
+.reveal.from-left {
+  transform: translateX(-44px);
+}
+.reveal.from-right {
+  transform: translateX(44px);
+}
+.reveal.from-none {
+  transform: none;
+}
+.reveal.is-in {
+  opacity: 1;
+  transform: none;
+}
+
+/* ---------- hero line-mask reveal ---------- */
+.mask-line {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.1em;
+  margin-bottom: -0.1em;
+}
+.mask-line > span {
+  display: block;
+  transform: translateY(115%);
+  animation: rise 1.05s var(--ease-out-soft) forwards;
+}
+@keyframes rise {
+  to {
+    transform: translateY(0);
+  }
+}
+
+/* ---------- living image motion ---------- */
+.kenburns {
+  animation: kenburns 18s ease-in-out infinite alternate;
+}
+@keyframes kenburns {
+  from {
+    transform: scale(1) translate(0, 0);
+  }
+  to {
+    transform: scale(1.08) translate(-1.2%, 1%);
+  }
+}
+
+
+
+/* ---------- marquee ---------- */
+.marquee-track {
+  animation: marquee 36s linear infinite;
+}
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* ---------- field journal story swap ---------- */
+.story-enter {
+  animation: story-in 0.65s var(--ease-out-soft) both;
+}
+@keyframes story-in {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ---------- scroll cue ---------- */
+.scroll-cue {
+  animation: cue 2.2s var(--ease-out-soft) infinite;
+}
+@keyframes cue {
+  0% {
+    transform: scaleY(0);
+    transform-origin: top;
+  }
+  45% {
+    transform: scaleY(1);
+    transform-origin: top;
+  }
+  55% {
+    transform: scaleY(1);
+    transform-origin: bottom;
+  }
+  100% {
+    transform: scaleY(0);
+    transform-origin: bottom;
+  }
+}
+
+/* ---------- grain overlay ---------- */
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 95;
+  pointer-events: none;
+  opacity: 0.055;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+}
+
+/* ---------- nav underline ---------- */
+.nav-link {
+  position: relative;
+}
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -5px;
+  height: 2px;
+  width: 100%;
+  background: var(--color-clay);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.4s var(--ease-out-soft);
+}
+.nav-link:hover::after,
+.nav-link:focus-visible::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+/* ---------- editorial outlined numerals ---------- */
+.text-outline-ink {
+  -webkit-text-stroke: 1.5px rgb(34 32 26 / 0.16);
+  color: transparent;
+}
+.text-outline-bone {
+  -webkit-text-stroke: 1.5px rgb(244 238 225 / 0.22);
+  color: transparent;
+}
+
+/* ---------- vertical type ---------- */
+.vertical-rl {
+  writing-mode: vertical-rl;
+}
+
+/* ---------- restrained tactile neumorphism (very subtle) ---------- */
+/* Soft dual-light directional shading on warm bone/parchment surfaces */
+.neu-raised-sm {
+  box-shadow:
+    2px 2px 6px rgba(34, 32, 26, 0.07),
+    -2px -2px 5px rgba(255, 255, 255, 0.8);
+}
+
+.neu-raised-card {
+  box-shadow:
+    4px 4px 12px rgba(34, 32, 26, 0.06),
+    -3px -3px 10px rgba(255, 255, 255, 0.75);
+}
+
+.neu-pressed {
+  box-shadow:
+    inset 1.5px 1.5px 3.5px rgba(34, 32, 26, 0.08),
+    inset -1.5px -1.5px 3px rgba(255, 255, 255, 0.85);
+}
+
+.neu-btn {
+  box-shadow:
+    2px 3px 7px rgba(34, 32, 26, 0.09),
+    -2px -2px 6px rgba(255, 255, 255, 0.65);
+  transition: all 0.25s var(--ease-out-soft);
+}
+.neu-btn:hover {
+  box-shadow:
+    3px 4px 10px rgba(34, 32, 26, 0.12),
+    -2px -2px 7px rgba(255, 255, 255, 0.8);
+  transform: translateY(-1px);
+}
+.neu-btn:active {
+  box-shadow:
+    inset 1.5px 1.5px 4px rgba(34, 32, 26, 0.18),
+    inset -1px -1px 3px rgba(255, 255, 255, 0.4);
+  transform: translateY(1px);
+}
+
+/* Subtle debossed plate on deep pine/dark ink surfaces */
+.neu-dark-pressed {
+  box-shadow:
+    inset 1.5px 1.5px 3px rgba(0, 0, 0, 0.4),
+    inset -1px -1px 2px rgba(255, 255, 255, 0.05);
+}
+
+/* ---------- reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+  .mask-line > span {
+    transform: none;
+    animation: none;
+  }
+  .kenburns,
+  .marquee-track,
+  .scroll-cue,
+  .story-enter {
+    animation: none !important;
+  }
+  .story-enter {
+    opacity: 1;
+  }
+}
